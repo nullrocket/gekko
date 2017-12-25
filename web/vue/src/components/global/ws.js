@@ -58,6 +58,7 @@ export const connect = () => {
   }
   socket.onmessage = function(message) {
     let payload = JSON.parse(message.data);
+    console.log(message,payload);
     bus.$emit(payload.type, payload);
   };
 }

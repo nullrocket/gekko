@@ -151,7 +151,7 @@ Trader.prototype.getPortfolio = function(callback) {
       { name: this.currency, amount: currencyAmount },
     ];
 
-    return callback(err.message, portfolio);
+    return callback(undefined, portfolio);
   };
 
   this.binance.account({}, _.bind(setBalance, this));
@@ -190,14 +190,14 @@ Trader.prototype.getTicker = function(callback) {
       bid: parseFloat(result.bidPrice),
     };
 
-    callback(err.message, ticker);
+    callback(undefined, ticker);
   };
 
   // Not exposed by the API yet, have to do it the hard way
   this.binance._makeRequest(
     {},
     _.bind(setTicker, this),
-    'ticker/allBookTickers'
+    'api/v1/ticker/allBookTickers'
   );
 };
 
@@ -339,7 +339,7 @@ Trader.prototype.checkOrder = function(order, callback) {
 
     var stillThere =
       data.status === 'NEW' || data.status === 'PARTIALLY_FILLED';
-    callback(err.message, !stillThere);
+    callback(null, !stillThere);
   };
 
   this.binance.queryOrder(
@@ -405,16 +405,21 @@ Trader.getCapabilities = function() {
       'OMG',
       'POWR',
       'QTUM',
-      'ZEC',
+      'ZEC','XRP'
     ],
     markets: [
       // https://www.binance.com/exchange/public/product
 
       //Tradeable againt BTC
       {
+        pair: ['BTC', 'XRP'],
+        minimalOrder: { amount: 1, unit: 'asset' },
+        precision: 0.00000001,
+      },
+      {
         pair: ['BTC', 'BCC'],
         minimalOrder: { amount: 0.001, unit: 'asset' },
-        precision: 0.000001,
+        precision: 0.00000001,
       },
       {
         pair: ['BTC', 'BNB'],

@@ -14,7 +14,10 @@ const sync = () => {
 
   bus.$on('new_gekko', data => {
     if(data.gekko.type === 'leech')
-      store.commit('addStratrunner', data.gekko);
+  {
+    data.type = "leech";
+    store.commit('addStratrunner', data.gekko);
+  }
   });
 
   const update = (data) => {
