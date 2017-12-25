@@ -60,7 +60,7 @@ Logger.prototype.logRoundtrip = function(rt) {
  }
  catch(e)
  {
-   display= ["LOGGING ERROR error",JSON.stringify(rt)];
+   display= ["LOGGING ERROR error"];
  }
 
   log.info('(ROUNDTRIP)', display.join('\t'));
