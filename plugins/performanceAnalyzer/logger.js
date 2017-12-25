@@ -48,13 +48,20 @@ Logger.prototype.logRoundtripHeading = function() {
 }
 
 Logger.prototype.logRoundtrip = function(rt) {
-  const display = [
-    rt.entryAt.utc().format('YYYY-MM-DD HH:mm'),
-    rt.exitAt.utc().format('YYYY-MM-DD HH:mm'),
-    (moment.duration(rt.duration).humanize() + "           ").slice(0,16),
-    rt.pnl.toFixed(2),
-    rt.profit.toFixed(2)
-  ];
+ var display = null;
+  try {
+    display = [
+     rt.entryAt.utc().format('YYYY-MM-DD HH:mm'),
+     rt.exitAt.utc().format('YYYY-MM-DD HH:mm'),
+     (moment.duration(rt.duration).humanize() + "           ").slice(0, 16),
+     rt.pnl.toFixed(2),
+     rt.profit.toFixed(2)
+   ];
+ }
+ catch(e)
+ {
+   display= ["LOGGING ERROR error",JSON.stringify(rt)];
+ }
 
   log.info('(ROUNDTRIP)', display.join('\t'));
 }
